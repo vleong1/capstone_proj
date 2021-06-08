@@ -15,12 +15,26 @@ cupid_df = pd.read_pickle('../data/grouped_cupid.pkl')
 # drop "status", "location"
 cupid.drop(columns = ['status', 'location'], inplace = True)
 
-# function to ohe, create sparse matrices, and return the cosine similarity based on orientation
+# function to ohe, create sparse matrices, and return the cosine similarity based on orientation -- v.2
 def invalue_to_similarity(invalue_df, orientation_df):
     """
     invalue_df: converted DataFrame of user inputs
     orientation_df: DataFrame of all people of that orientation
     """
+
+    # split by offspring preference
+    if invalue_df['offspring'].unique()[0] == "doesn't have kid(s), but wants kid(s)":
+        orientation_df = orientation_df[(orientation_df['offspring'] == "has kid(s)") | (orientation_df['offspring'] == "has kid(s) and wants more") | \
+                                        (orientation_df['offspring'] == "has kid(s), but doesn't want more")]
+    elif invalue_df['offspring'].unique()[0] == "doesn't have kids, and doesn't want any":
+        orientation_df = orientation_df[(orientation_df['offspring'] == "doesn't have kids") | (orientation_df['offspring'] == "doesn't want kids") | \
+                                        (orientation_df['offspring'] == "doesn't have kids, and doesn't want any")]
+    elif invalue_df['offspring'].unique()[0] == "has kid(s), but doesn't want more":
+        orientation_df = orientation_df[(orientation_df['offspring'] == "doesn't have kids") | (orientation_df['offspring'] == "doesn't have kid(s), but wants kid(s)") | \
+                                        (orientation_df['offspring'] == "wants kid(s)")]
+    elif invalue_df['offspring'].unique()[0] == "has kid(s) and wants more":
+        orientation_df = orientation_df[(orientation_df['offspring'] == "has kid(s)") | (orientation_df['offspring'] == "has kid(s) and wants more") | \
+                                        (orientation_df['offspring'] == "wants kid(s)")]
     
     # concat input values to orientation df to prep for cosine similarity
     df = pd.concat([orientation_df, invalue_df])
@@ -53,8 +67,8 @@ def invalue_to_similarity(invalue_df, orientation_df):
     return matches
 
 
-# recommender function
-def lover_recommender_test6(invalue, religion, lowest_age, highest_age):
+# recommender function -- v.7
+def lover_recommender_test(invalue, religion, lowest_age, highest_age):
     """
     invalue (list): survey/streamlit app responses
     df = based on conditional -- if religion matters
@@ -70,7 +84,7 @@ def lover_recommender_test6(invalue, religion, lowest_age, highest_age):
         
         # straight male
         straight_male = cupid_df[(cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'straight') & (cupid_df['religion'] == religion) & \
-            (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)].head(3000)
+            (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)].head(10000)
         
         # call 'invalue_to_similarity' function to return similarities
         return invalue_to_similarity(invalue_df, straight_male)
@@ -80,7 +94,7 @@ def lover_recommender_test6(invalue, religion, lowest_age, highest_age):
         
         # straight female
         straight_female = cupid_df[(cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'straight') & (cupid_df['religion'] == religion) & \
-            (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)].head(3000)
+            (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)].head(10000)
 
         # call 'invalue_to_similarity' function to return similarities
         return invalue_to_similarity(invalue_df, straight_female)
@@ -114,6 +128,3 @@ def lover_recommender_test6(invalue, religion, lowest_age, highest_age):
         
         # call 'invalue_to_similarity' function to return similarities
         return invalue_to_similarity(invalue_df, bi)
-
-
-    
