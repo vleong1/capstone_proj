@@ -64,7 +64,7 @@ from category_encoders import OneHotEncoder
 |**body_type**|*category*|*average, fit, athletic, rather not say, etc.*|Body type of person.|
 |**diet**|*category*|*anything, vegetarian, vegan, kosher, halal, other*|Type of diet the person follows and how strictly it's followed. Possible values have been truncated to show as example.|
 |**drinks**|*category*|*often, desperately, socially, rarely, not at all*|Alcohol consumption habits of person.|
-|**drugs**|*category*|*yes, sometimes, never*|Gender of person.|
+|**drugs**|*category*|*yes, sometimes, never*|If the person partakes in drugs.|
 |**pets**|*category*|*likes/dislikes dogs/cats*|Whether the person likes cats, dogs, or neither. Possible values have been truncated to show as example.|
 |**offspring**|*category*|*doesn't have/has kid(s), doesn't want/wants kid(s)*|Whether or not the person has kids or plans on having them. Possible values have been truncated to show as example.|
 |**smokes**|*category*|*yes, no, sometimes, when drinking, trying to quit*|Smoking habits of person.|
