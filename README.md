@@ -84,5 +84,5 @@ Parameters used: (if applicable)
 
 ### Limitations and Future Project Refinements
 - Majority of dataset was from California (NorCal)
-- Null values are ambiguous
-- Some values, in general, are ambiguous
+- Dataset values are ambiguous (filled & null)
+- Model evaluation: Since there isn't a "ratings" feature to evaluate the model based on RMSE, I'd have to create a custom "rating" on each user to determine how well the model performed
