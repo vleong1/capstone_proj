@@ -13,6 +13,8 @@ cupid_df = pd.read_pickle('../data/grouped_cupid.pkl')
 # drop "status", "location"
 cupid.drop(columns = ['status', 'location'], inplace = True)
 
+# ----
+
 # function to ohe, create sparse matrices, and return the cosine similarity based on orientation
 def invalue_to_similarity(invalue_df, orientation_df):
     """

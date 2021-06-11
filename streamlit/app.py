@@ -1,10 +1,9 @@
 import streamlit as st
-import pickle
 import numpy as np
 import pandas as pd
 
 # load model
-from recommender_model import lover_recommender_test, invalue_to_similarity, offspring_subset
+from recommender_model import lover_recommender_test, offspring_subset
 
 # load data
 cupid_df = pd.read_pickle('../data/grouped_cupid.pkl')
