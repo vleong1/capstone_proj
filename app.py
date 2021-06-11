@@ -87,97 +87,102 @@ if click:
 
         # keep a running df of profiles liked
         liked = pd.DataFrame(columns = cupid_df.columns)
+        invalue_df = pd.DataFrame(columns = cupid_df.columns)
+
         for value in options:
             liked = liked.append(cupid.loc[value])
+            invalue_df = invalue_df.append(cupid_df.loc[value])
 
-        try: 
-            # more matches
-            st.markdown("Would you like to see more matches?")
-            more = st.radio("", ['No', 'Yes'])
+        # more matches
+        st.markdown("Would you like to see more matches?")
+        more = st.radio("", ['No', 'Yes'])
 
-            if more == 'Yes':
-                # df for function -- grouped cupid
-                more_df = pd.DataFrame(columns = cupid_df.columns)
-                
-                for value in options:
-                    more_df = more_df.append(cupid_df.loc[value])
+        # try:
+        if more == 'Yes' and len(liked) > 0:
+            
+            # straight female
+            if sex == 'f' and orientation == 'straight':
+                straight_female = cupid_df[(((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'straight')) | ((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'bisexual'))) \
+                & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
 
-                # straight female
-                if sex == 'f' and orientation == 'straight':
-                    straight_female = cupid_df[(((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'straight')) | ((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'bisexual'))) \
+                matches = offspring_subset(invalue_df, straight_female)
+
+            # straight male
+            elif sex == 'm' and orientation == 'straight':
+                straight_male = cupid_df[(((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'straight')) | ((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'bisexual'))) \
                     & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
 
-                    matches = offspring_subset(more_df, straight_female)
+                matches = offspring_subset(invalue_df, straight_male)
 
-                # straight male
-                elif sex == 'm' and orientation == 'straight':
-                    straight_male = cupid_df[(((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'straight')) | ((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'bisexual'))) \
-                        & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+            # gay female
+            elif sex == 'f' and orientation == 'gay':
+                gay_female = cupid_df[(cupid_df['sex'] == 'f') & ((cupid_df['orientation'] == 'gay') | (cupid_df['orientation'] == 'bisexual')) & \
+                    (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
 
-                    matches = offspring_subset(more_df, straight_male)
+                matches = offspring_subset(invalue_df, gay_female)
 
-                # gay female
-                elif sex == 'f' and orientation == 'gay':
-                    gay_female = cupid_df[(cupid_df['sex'] == 'f') & ((cupid_df['orientation'] == 'gay') | (cupid_df['orientation'] == 'bisexual')) & \
-                        (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+            # gay male
+            elif sex == 'm' and orientation == 'gay':
+                gay_male = cupid_df[(cupid_df['sex'] == 'm') & ((cupid_df['orientation'] == 'gay') | (cupid_df['orientation'] == 'bisexual')) & \
+                    (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
 
-                    matches = offspring_subset(more_df, gay_female)
+                matches = offspring_subset(invalue_df, gay_male)
 
-                # gay male
-                elif sex == 'm' and orientation == 'gay':
-                    gay_male = cupid_df[(cupid_df['sex'] == 'm') & ((cupid_df['orientation'] == 'gay') | (cupid_df['orientation'] == 'bisexual')) & \
-                        (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+            # bi female looking for bi individual or straight male or gay female
+            elif sex == 'f' and orientation == 'bisexual':
+                bi_female = cupid_df[((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'gay') & (cupid_df['religion'] == religion) & \
+                        (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | ((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'straight') & \
+                    (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | \
+                    (cupid_df['orientation'] == 'bisexual')  & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
 
-                    matches = offspring_subset(more_df, gay_male)
+                matches = offspring_subset(invalue_df, bi_female)
 
-                # bi female looking for bi individual or straight male or gay female
-                elif sex == 'f' and orientation == 'bisexual':
-                    bi_female = cupid_df[((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'gay') & (cupid_df['religion'] == religion) & \
-                                    (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | ((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'straight') & \
-                                    (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | \
-                                (cupid_df['orientation'] == 'bisexual')  & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+            # bi male looking for bi individual or straight female or gay male
+            elif orientation == 'bisexual' and sex == 'm':
+                bi_male = cupid_df[((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'gay') & (cupid_df['religion'] == religion) & \
+                        (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | ((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'straight') & \
+                    (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | \
+                    (cupid_df['orientation'] == 'bisexual')  & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
 
-                    matches = offspring_subset(more_df, bi_female)
+                matches = offspring_subset(invalue_df, bi_male)
 
-                # bi male looking for bi individual or straight female or gay male
-                elif orientation == 'bisexual' and sex == 'm':
-                    bi_male = cupid_df[((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'gay') & (cupid_df['religion'] == religion) & \
-                                    (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | ((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'straight') & \
-                                    (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | \
-                                    (cupid_df['orientation'] == 'bisexual')  & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+            
 
-                    matches = offspring_subset(more_df, bi_male)
+            # to return OG cupid outputs, that were based off grouped values
+            # df to show users -- OG cupid
+            show_users = pd.DataFrame(columns = cupid.columns)
+            
+            for value2 in matches.index:
+                show_users = show_users.append(cupid.loc[value2])
 
-                
+            st.markdown("Here are more matches, based on the profile(s) that caught your eye earlier! 🤗")
+            st.table(show_users)
 
-                # to return OG cupid outputs, that were based off grouped values
-                # df to show users -- OG cupid
-                show_users = pd.DataFrame(columns = cupid.columns)
-                
-                for value2 in matches.index:
-                    show_users = show_users.append(cupid.loc[value2])
+            # any more profiles that users liked
+            st.markdown("Any of these profiles catch your eye? 👁")
+            options_more = st.multiselect("", list(show_users.index))
 
-                st.markdown("Here are more matches, based on the profile(s) that caught your eye earlier! 🤗")
-                st.table(show_users)
+            for value in options_more:
+                liked = liked.append(cupid.loc[value])
 
-                # any more profiles that users liked
-                st.markdown("Any of these profiles catch your eye? 👁")
-                options_more = st.multiselect("", list(show_users.index))
-
-                for value in options_more:
-                    liked = liked.append(cupid.loc[value])
-
-                # if options_more:
-                #     st.subheader("Here are all the profiles you liked:")
-                #     st.table(liked)
-                #     st.subheader("Go on and send a message! 💌 Happy chatting! 💞💓")
-        except:
-            st.markdown("**If you'd like to see more matches, please select profiles from above that piqued your interest! 🙎**")
+            # if options_more:
+            #     st.subheader("Here are all the profiles you liked:")
+            #     st.table(liked)
+            #     st.subheader("Go on and send a message! 💌 Happy chatting! 💞💓")
         
+        elif more == 'No':
+            pass
+
         else:
-            st.subheader("Here are all the profiles you liked:")
-            st.table(liked)
-            st.subheader("Go on and send a message! 💌 Happy chatting! 💞💓")
+            st.markdown("**❗❗ NOTE: If you'd like to see more matches, please select profiles from above that piqued your interest! 🙎**")
+        
+        # except:
+        #     st.markdown("**NOTE: If you'd like to see more matches, please select profiles from above that piqued your interest! 🙎**")
+        
+        
+        st.subheader("Here are all the profiles you liked:")
+        st.table(liked)
+        st.subheader("Go on and send a message! 💌 Happy chatting! 💞💓")
         
     except:
         st.image("https://media1.tenor.com/images/5a7baa3abccc024569143229fa700dd6/tenor.gif?itemid=10592594", width = 350)
