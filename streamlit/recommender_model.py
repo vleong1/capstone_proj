@@ -1,10 +1,7 @@
 import pandas as pd
 import numpy as np
-import streamlit as st
 
-from scipy import sparse
-import sys
-from sklearn.metrics.pairwise import pairwise_distances, cosine_distances, cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity
 from category_encoders import OneHotEncoder
 
 
@@ -73,6 +70,50 @@ def offspring_subset(invalue_df, orientation_df):
     # cosine similarities
     return invalue_to_similarity(invalue_df, orientation_df)
 
+def orientation(orientation, sex, religion, lowest_age, highest_age):
+    """
+    This function subsets the data by orientation, sex, religion, and age range
+
+    orientation (str): sexual orientation user identifies with
+    sex (str): gender identity of user
+    religion: religion of user
+    lowest_age / highest_age: age range preference of partner recommendation
+    """
+    
+    # straight female looking for straight/bi male
+    if orientation == 'straight/bi' and sex == 'm':
+        return cupid_df[(((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'straight')) | ((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'bisexual'))) \
+                    & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+    
+    # straight male looking for straight/bi female
+    elif orientation == 'straight/bi' and sex == 'f':
+        return cupid_df[(((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'straight')) | ((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'bisexual'))) \
+                & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+    
+    # gay male looking for gay/bi male
+    elif orientation == 'gay/bi' and sex == 'm':
+        return cupid_df[(cupid_df['sex'] == 'm') & ((cupid_df['orientation'] == 'gay') | (cupid_df['orientation'] == 'bisexual')) & \
+             (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+    
+    # gay female looking for gay/bi female
+    elif orientation == 'gay/bi' and sex == 'f':
+        return cupid_df[(cupid_df['sex'] == 'f') & ((cupid_df['orientation'] == 'gay') | (cupid_df['orientation'] == 'bisexual')) & \
+             (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+    
+    # bi female looking for bi individual or straight male or gay female
+    elif orientation == 'bisexual' and sex == 'f':
+        return cupid_df[((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'gay') & (cupid_df['religion'] == religion) & \
+                         (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | ((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'straight') & \
+                        (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | \
+                     (cupid_df['orientation'] == 'bisexual')  & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+    
+    # bi male looking for bi individual or straight female or gay male
+    elif orientation == 'bisexual' and sex == 'm':
+        return cupid_df[((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'gay') & (cupid_df['religion'] == religion) & \
+                         (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | ((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'straight') & \
+                        (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | \
+                     (cupid_df['orientation'] == 'bisexual')  & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+
 # recommender function -- v.8
 def lover_recommender_test(invalue, religion, lowest_age, highest_age):
     """
@@ -86,88 +127,74 @@ def lover_recommender_test(invalue, religion, lowest_age, highest_age):
 
     # ----------------
     
-    # straight female looking for straight mmale
+    # straight female looking for straight/bi male
     if invalue_df['orientation'].unique()[0] == 'straight' and invalue_df['sex'].unique()[0] == 'f':
         
-        # straight male df
-        straight_male = cupid_df[(cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'straight') & (cupid_df['religion'] == religion) & \
-            (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)].head(10000)
+        # split data by orientation
+        orientation_df = orientation('straight/bi', 'm', religion, lowest_age, highest_age)
         
         # call 'invalue_to_similarity' function to return top 5 similarities
         try: 
-            return offspring_subset(invalue_df, straight_male)
+            return offspring_subset(invalue_df, orientation_df)
         except ValueError:
             return "Apologies, we don't have any profiles in the database that relate to your age range, orientation, and religious inputs at the moment."
-        # return matches
-        
-        # see matches + option to see additional matches
-        # return offspring_subset(matches, religion, lowest_age, highest_age)
     
-    # straight male looking for straight female
+    # straight male looking for straight/bi female
     elif invalue_df['orientation'].unique()[0] == 'straight' and invalue_df['sex'].unique()[0] == 'm':
         
-        # straight female df
-        straight_female = cupid_df[(cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'straight') & (cupid_df['religion'] == religion) & \
-            (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)].head(10000)
+        # split data by orientation
+        orientation_df = orientation('straight/bi', 'f', religion, lowest_age, highest_age)
 
         # call 'invalue_to_similarity' function to return similarities
         try: 
-            return offspring_subset(invalue_df, straight_female)
+            return offspring_subset(invalue_df, orientation_df)
         except ValueError:
             return "Apologies, we don't have any profiles in the database that relate to your age range, orientation, and religious inputs at the moment."
-        # return matches
-        
-        # see matches + option to see additional matches
-        # return more_matches(matches, religion, lowest_age, highest_age)
     
-    # gay male looking for gay male
+    # gay male looking for gay/bi male
     elif invalue_df['orientation'].unique()[0] == 'gay' and invalue_df['sex'].unique()[0] == 'm':
         
-        # gay male df
-        gay_male = cupid_df[(cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'gay') & (cupid_df['religion'] == religion) & \
-            (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+        # split data by orientation
+        orientation_df = orientation('gay/bi', 'm', religion, lowest_age, highest_age)
         
         # call 'invalue_to_similarity' function to return similarities
         try: 
-            return offspring_subset(invalue_df, gay_male)
+            return offspring_subset(invalue_df, orientation_df)
         except ValueError:
             return "Apologies, we don't have any profiles in the database that relate to your age range, orientation, and religious inputs at the moment."
-        # return matches
-        
-        # see matches + option to see additional matches
-        # return more_matches(matches, religion, lowest_age, highest_age)
     
-    # gay female looking for gay female
+    # gay female looking for gay/bi female
     elif invalue_df['orientation'].unique()[0] == 'gay' and invalue_df['sex'].unique()[0] == 'f':
         
-        # gay female df
-        gay_female = cupid_df[(cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'gay') & (cupid_df['religion'] == religion) & \
-            (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+        # split data by orientation
+        orientation_df = orientation('gay/bi', 'f', religion, lowest_age, highest_age)
         
         # call 'invalue_to_similarity' function to return similarities
         try: 
-            return offspring_subset(invalue_df, gay_female)
+            return offspring_subset(invalue_df, orientation_df)
         except ValueError:
             return "Apologies, we don't have any profiles in the database that relate to your age range, orientation, and religious inputs at the moment."
-        # return matches
-        
-        # see matches + option to see additional matches
-        # return more_matches(matches, religion, lowest_age, highest_age)
     
-    # bisexual male/female looking for bisexual male/female
-    elif (invalue_df['orientation'].unique()[0] == 'bisexual' and invalue_df['sex'].unique()[0] == 'f') or \
-         (invalue_df['orientation'].unique()[0] == 'bisexual' and invalue_df['sex'].unique()[0] == 'm'):
+    # bi female looking for bi individual or gay female or straight male
+    elif (invalue_df['orientation'].unique()[0] == 'bisexual' and invalue_df['sex'].unique()[0] == 'f'):
         
-        # bi individual df
-        bi = cupid_df[(cupid_df['orientation'] == 'bisexual') & (cupid_df['religion'] == religion) & \
-                (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
+        # split data by orientation
+        orientation_df = orientation('bisexual', 'f', religion, lowest_age, highest_age)
         
         # call 'invalue_to_similarity' function to return similarities
         try: 
-            return offspring_subset(invalue_df, bi)
+            return offspring_subset(invalue_df, orientation_df)
         except ValueError:
             return "Apologies, we don't have any profiles in the database that relate to your age range, orientation, and religious inputs at the moment."
-        # return matches
+
+    # bi male looking for bi individual or gay male or straight female
+    elif (invalue_df['orientation'].unique()[0] == 'bisexual' and invalue_df['sex'].unique()[0] == 'm'):
         
-        # see matches + option to see additional matches
-        # return more_matches(matches, religion, lowest_age, highest_age)
+    # split data by orientation
+        orientation_df = orientation('bisexual', 'm', religion, lowest_age, highest_age)
+
+        # call 'invalue_to_similarity' function to return similarities
+        try: 
+            return offspring_subset(invalue_df, orientation_df)
+        except ValueError:
+            return "Apologies, we don't have any profiles in the database that relate to your age range, orientation, and religious inputs at the moment."
