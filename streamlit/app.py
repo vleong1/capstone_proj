@@ -31,8 +31,12 @@ st.subheader("Tell us a little bit about yourself first...")
 age = st.number_input('How old are you?')
 
 st.write("What's your age range?")
-lowest_age = st.number_input('Lowest Age:')
-highest_age = st.number_input('Highest Age:')
+
+col1, col2 = st.beta_columns(2)
+with col1:
+    lowest_age = st.number_input('Lowest Age:')
+with col2:
+    highest_age = st.number_input('Highest Age:')
 
 sex = st.radio('What gender do you identify as?',['m', 'f'])
 orientation = st.radio('What sexual orientation do you identify with?',['straight', 'gay', 'bisexual'])
@@ -42,6 +46,7 @@ drinks = st.radio('Do you consume alcoholic beverages?',['yes','no', 'sometimes'
 drugs = st.radio('Do you use drugs?',['yes', 'no', 'sometimes'])
 
 # offspring
+
 # do you have any children? yes/no
 any_children = st.radio('Do you have any kid(s)/children?', ['yes', 'no'])
 
@@ -83,7 +88,6 @@ if click:
 
         # keep a running df of profiles liked
         liked = pd.DataFrame(columns = cupid_df.columns)
-
         for value in options:
             liked = liked.append(cupid.loc[value])
 
@@ -94,47 +98,47 @@ if click:
 
             if more == 'Yes':
                 # df for function -- grouped cupid
-                invalue_df = pd.DataFrame(columns = cupid_df.columns)
+                more_df = pd.DataFrame(columns = cupid_df.columns)
                 
                 for value in options:
-                    invalue_df = invalue_df.append(cupid_df.loc[value])
+                    more_df = more_df.append(cupid_df.loc[value])
 
                 # straight female
-                if invalue_df['sex'].unique()[0] == 'f' and invalue_df['orientation'].unique()[0] == 'straight':
+                if sex == 'f' and orientation == 'straight':
                     straight_female = cupid_df[(((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'straight')) | ((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'bisexual'))) \
                     & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
 
-                    matches = offspring_subset(invalue_df, straight_female)
+                    matches = offspring_subset(more_df, straight_female)
 
                 # straight male
-                elif invalue_df['sex'].unique()[0] == 'm' and invalue_df['orientation'].unique()[0] == 'straight':
+                elif sex == 'm' and orientation == 'straight':
                     straight_male = cupid_df[(((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'straight')) | ((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'bisexual'))) \
                         & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
 
-                    matches = offspring_subset(invalue_df, straight_male)
+                    matches = offspring_subset(more_df, straight_male)
 
                 # gay female
-                elif invalue_df['sex'].unique()[0] == 'f' and invalue_df['orientation'].unique()[0] == 'gay':
+                elif sex == 'f' and orientation == 'gay':
                     gay_female = cupid_df[(cupid_df['sex'] == 'f') & ((cupid_df['orientation'] == 'gay') | (cupid_df['orientation'] == 'bisexual')) & \
                         (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
 
-                    matches = offspring_subset(invalue_df, gay_female)
+                    matches = offspring_subset(more_df, gay_female)
 
                 # gay male
-                elif invalue_df['sex'].unique()[0] == 'm' and invalue_df['orientation'].unique()[0] == 'gay':
+                elif sex == 'm' and orientation == 'gay':
                     gay_male = cupid_df[(cupid_df['sex'] == 'm') & ((cupid_df['orientation'] == 'gay') | (cupid_df['orientation'] == 'bisexual')) & \
                         (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
 
-                    matches = offspring_subset(invalue_df, gay_male)
+                    matches = offspring_subset(more_df, gay_male)
 
                 # bi female looking for bi individual or straight male or gay female
-                elif invalue_df['sex'].unique()[0] == 'f' and invalue_df['orientation'].unique()[0] == 'bisexual':
+                elif sex == 'f' and orientation == 'bisexual':
                     bi_female = cupid_df[((cupid_df['sex'] == 'f') & (cupid_df['orientation'] == 'gay') & (cupid_df['religion'] == religion) & \
                                     (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | ((cupid_df['sex'] == 'm') & (cupid_df['orientation'] == 'straight') & \
                                     (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | \
                                 (cupid_df['orientation'] == 'bisexual')  & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
 
-                    matches = offspring_subset(invalue_df, bi_female)
+                    matches = offspring_subset(more_df, bi_female)
 
                 # bi male looking for bi individual or straight female or gay male
                 elif orientation == 'bisexual' and sex == 'm':
@@ -143,7 +147,7 @@ if click:
                                     (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)) | \
                                     (cupid_df['orientation'] == 'bisexual')  & (cupid_df['religion'] == religion) & (cupid_df['age'] >= lowest_age) & (cupid_df['age'] <= highest_age)]
 
-                    matches = offspring_subset(invalue_df, bi_male)
+                    matches = offspring_subset(more_df, bi_male)
 
                 
 
