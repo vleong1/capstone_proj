@@ -6,8 +6,8 @@ import pandas as pd
 from recommender_model import lover_recommender_test, offspring_subset
 
 # load data
-cupid_df = pd.read_pickle('../data/grouped_cupid.pkl')
-cupid = pd.read_pickle('../data/clean_cupid.pkl')
+cupid_df = pd.read_pickle('data/grouped_cupid.pkl')
+cupid = pd.read_pickle('data/clean_cupid.pkl')
 
 # drop "status", "location"
 cupid.drop(columns = ['status', 'location'], inplace = True)

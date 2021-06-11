@@ -6,8 +6,8 @@ from category_encoders import OneHotEncoder
 
 
 # load in data
-cupid = pd.read_pickle('../data/clean_cupid.pkl')
-cupid_df = pd.read_pickle('../data/grouped_cupid.pkl')
+cupid = pd.read_pickle('data/clean_cupid.pkl')
+cupid_df = pd.read_pickle('data/grouped_cupid.pkl')
 # cupid_religion = pd.read_pickle('../data/religion_cupid.pkl')
 
 # drop "status", "location"
