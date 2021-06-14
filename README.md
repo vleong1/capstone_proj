@@ -1,15 +1,15 @@
 # Lover Recommendation with Unsupervised Learning
----
+
 
 ## Problem Statement
----
+
 **Using unsupervised learning, can we build a model to recommend potential matches for a given user who's looking for a partner?**
 
 ## Executive Summary
----
+
 
 ## Table of Contents
----
+
 - Background
 - Data Collection
 - Data Inspection/Cleaning
@@ -24,30 +24,30 @@
 - Limitations and Future Project Refinements
 
 ### Background
----
+
 
 
 ### Data Collection
----
+
 
 
 
 ### Data Inspection/Cleaning
----
+
 
 Intensive cleaning, null values, grouping values, etc...
 
 ### Data Sources
----
+
 - [OkCupid Profiles (Kaggle)]('https://www.kaggle.com/andrewmvd/okcupid-profiles')
 
 ### Data Visualization
----
+
 
 
 
 ### Imported Libraries
----
+
 ```
 import pandas as pd
 import numpy as np
@@ -59,7 +59,7 @@ from category_encoders import OneHotEncoder
 ```
 
 ### Data Dictionary
----
+
 *Note: Some possible values of features have been truncated within the dictionary to show as an example.*
 
 |Feature|Data Type|Possible Values|Description|
@@ -78,25 +78,26 @@ from category_encoders import OneHotEncoder
 |**religion**|*category*|*atheism, christianity, catholicism, [religion] and serious about it, [religion] and laughing about it, etc.*|Religious beliefs of person and how strictly it's followed. Possible values have been truncated to show as example.|
 
 ### Data Modeling
----
+
 Parameters used: (if applicable)
 
 
 ### Analysis
----
+
 
 ### Conclusions/Recommendations
----
+
 
 
 ### Project Limitations
----
+
 - Majority of dataset was from California (NorCal)
 - Dataset values are ambiguous (filled & null)
 - Model evaluation: Since there isn't a "ratings" feature to evaluate the model based on RMSE, I'd have to create a custom "rating" on each user to determine how well the model performed
 
 ### Future Project Refinements
----
-
+1. Add a sort of "rating" for each user profile
+1. Handle profiles that were recommended again
+1. Incorporate additional relationship statuses (i.e. married, seeing someone)
 
 Updated: June 14, 2021
