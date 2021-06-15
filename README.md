@@ -49,7 +49,7 @@ I initially **dropped columns** I felt weren't indicative of a user's lifestyle,
 
 **How values were grouped / generalized:**
 
-<img src="assets/grouped_values.jpg" width="500"/>
+<img src="https://github.com/vleong1/lover-recommendations/blob/main/assets/grouped_values.JPG" width="500"/>
 
 ### Data Dictionary
 
@@ -94,7 +94,7 @@ from category_encoders import OneHotEncoder
 
 ### Modeling Approach
 
-<div><img src="assets/content_based.jpg" width="300"/></div>
+<div><img src="https://github.com/vleong1/lover-recommendations/blob/main/assets/content_based.JPG" width="300"/></div>
 
 I built a recommender system model, specifically a **Content-Based Filtering** recommender model, since my project was based off a fixed dataset and isn't as robust as an actual dating app. This model works in the way where a user would indicate their interest in a profile(s) and based on similar profiles of the liked profile(s), the similar profiles would then be recommended back to the user. The **metric** I focused on for the project was *cosine similarity*, which would measure how similar 2 vectors are, regardless of their sizes, and return a value between 0 - 1. The higher the cosine similarity, the more alike the 2 objects/vectors that are being compared.
 
@@ -111,7 +111,7 @@ I built a recommender system model, specifically a **Content-Based Filtering** r
 
 **Matching Criteria:**
 
-<div><img src="assets/matching_criteria.jpg" width="500"/></div>
+<div><img src="https://github.com/vleong1/lover-recommendations/blob/main/assets/matching_criteria.JPG" width="500"/></div>
 
 In terms of the **matching criteria**, there were *4 criteria* I wanted to ensure recommendations were filtered out for:
 - **Orientation**: First and foremost, I think it's important to match a user based on their sex and orientation. For example, Straight Male matched with either a Straight Female or a Bisexual Female.
@@ -125,13 +125,13 @@ Since there were no ratings included in the dataset to perform some sort of supe
 #### **1. Gay Male**
 
 **User Input:**
-<img src="assets/gay_male_input.jpg" width="1100"/>
+<img src="https://github.com/vleong1/lover-recommendations/blob/main/assets/gay_male_input.JPG" width="1100"/>
 
 **Initial Matches (Liked profiles highlighted):**
-<img src="assets/gay_male_matches.jpg" width="1100"/>
+<img src="https://github.com/vleong1/lover-recommendations/blob/main/assets/gay_male_matches.JPG" width="1100"/>
 
 **Additional Matches (Based off liked profiles):**
-<img src="assets/gay_male_more_matches.jpg" width="1100"/>
+<img src="https://github.com/vleong1/lover-recommendations/blob/main/assets/gay_male_more_matches.JPG" width="1100"/>
 
 #### **--> Analysis: Gay Male**
 
@@ -147,13 +147,13 @@ Since there were no ratings included in the dataset to perform some sort of supe
 #### **2. Bisexual Female**
 
 **User Input:**
-<img src="assets/bisexual_f_input.jpg" width="1100"/>
+<img src="https://github.com/vleong1/lover-recommendations/blob/main/assets/bisexual_f_input.JPG" width="1100"/>
 
 **Initial Matches (Liked profiles highlighted):**
-<img src="assets/bisexual_f_matches.jpg" width="1100"/>
+<img src="https://github.com/vleong1/lover-recommendations/blob/main/assets/bisexual_f_matches.JPG" width="1100"/>
 
 **Additional Matches (Based off liked profiles):**
-<img src="assets/bisexual_f_more_matches.jpg" width="1100"/>
+<img src="https://github.com/vleong1/lover-recommendations/blob/main/assets/bisexual_f_more_matches.JPG" width="1100"/>
 
 #### **--> Analysis: Bisexual Female**
 
