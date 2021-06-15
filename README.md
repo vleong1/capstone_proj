@@ -72,11 +72,11 @@ I initially **dropped columns** I felt weren't indicative of a user's lifestyle,
 
 ### Data Visualization
 
-<img src="assets/age_sex_distribution.jpg" width="900"/>
+<img src="https://github.com/vleong1/lover-recommendations/blob/main/assets/age_sex_distribution.JPG" width="900"/>
 1. I first wanted to take a look at **age distribution by sex** and noticed that majority of the ages lied between the ages of 24 - 30, with predominately more male profiles across majority of the age groups. Interestingly, there are more female than male profiles for ages 55+.
 
 
-<img src="assets/diet_religion_count.jpg" width="900"/>
+<img src="https://github.com/vleong1/lover-recommendations/blob/main/assets/diet_religion_count.JPG" width="900"/>
 2. I also wanted to take a look at **diet by religion**, where there were significantly less data points for halal or kosher diets, relative to vegetarian diets. Additionally, there was a lack of profiles of Islam religion, which majority of those data points also lived within a halal diet. Lack of data points, especially for specific religions, would affect the recommendations, since there would be a smaller pool of potential mathces and "religion" would be one of the matching criteria I'd specify that would determine recommendations for a user.
 
 
@@ -147,17 +147,13 @@ Since there were no ratings included in the dataset to perform some sort of supe
 #### **2. Bisexual Female**
 
 **User Input:**
-
 <img src="assets/bisexual_f_input.jpg" width="1100"/>
-![Alt text](assets/bisexual_f_input.jpg)
 
 **Initial Matches (Liked profiles highlighted):**
 <img src="assets/bisexual_f_matches.jpg" width="1100"/>
-![Alt text](assets/bisexual_f_matches.jpg)
 
 **Additional Matches (Based off liked profiles):**
 <img src="assets/bisexual_f_more_matches.jpg" width="1100"/>
-![Alt text](assets/bisexual_f_more_matches.jpg)
 
 #### **--> Analysis: Bisexual Female**
 
