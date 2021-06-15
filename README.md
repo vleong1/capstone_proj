@@ -49,7 +49,7 @@ I initially **dropped columns** I felt weren't indicative of a user's lifestyle,
 
 **How values were grouped / generalized:**
 
-<img src="assets/grouped_values.jpg" width="500"/>
+<img src="attachment:assets/grouped_values.jpg" width="500"/>
 
 ### Data Dictionary
 
@@ -72,11 +72,11 @@ I initially **dropped columns** I felt weren't indicative of a user's lifestyle,
 
 ### Data Visualization
 
-<img src="assets/age_sex_distribution.jpg" width="900"/>
+<img src="attachment:assets/age_sex_distribution.jpg" width="900"/>
 1. I first wanted to take a look at **age distribution by sex** and noticed that majority of the ages lied between the ages of 24 - 30, with predominately more male profiles across majority of the age groups. Interestingly, there are more female than male profiles for ages 55+.
 
 
-<img src="assets/diet_religion_count.jpg" width="900"/>
+<img src="attachment:assets/diet_religion_count.jpg" width="900"/>
 2. I also wanted to take a look at **diet by religion**, where there were significantly less data points for halal or kosher diets, relative to vegetarian diets. Additionally, there was a lack of profiles of Islam religion, which majority of those data points also lived within a halal diet. Lack of data points, especially for specific religions, would affect the recommendations, since there would be a smaller pool of potential mathces and "religion" would be one of the matching criteria I'd specify that would determine recommendations for a user.
 
 
@@ -94,7 +94,7 @@ from category_encoders import OneHotEncoder
 
 ### Modeling Approach
 
-<div><img src="assets/content_based.jpg" width="300"/></div>
+<img src="attachment:assets/content_based.jpg" width="300"/>
 
 I built a recommender system model, specifically a **Content-Based Filtering** recommender model, since my project was based off a fixed dataset and isn't as robust as an actual dating app. This model works in the way where a user would indicate their interest in a profile(s) and based on similar profiles of the liked profile(s), the similar profiles would then be recommended back to the user. The **metric** I focused on for the project was *cosine similarity*, which would measure how similar 2 vectors are, regardless of their sizes, and return a value between 0 - 1. The higher the cosine similarity, the more alike the 2 objects/vectors that are being compared.
 
@@ -111,7 +111,7 @@ I built a recommender system model, specifically a **Content-Based Filtering** r
 
 **Matching Criteria:**
 
-<div><img src="assets/matching_criteria.jpg" width="500"/></div>
+<img src="attachment:assets/matching_criteria.jpg" width="500"/>
 
 In terms of the **matching criteria**, there were *4 criteria* I wanted to ensure recommendations were filtered out for:
 - **Orientation**: First and foremost, I think it's important to match a user based on their sex and orientation. For example, Straight Male matched with either a Straight Female or a Bisexual Female.
@@ -125,13 +125,13 @@ Since there were no ratings included in the dataset to perform some sort of supe
 #### **1. Gay Male**
 
 **User Input:**
-<img src="assets/gay_male_input.jpg" width="1100"/>
+<img src="attachment:assets/gay_male_input.jpg" width="1100"/>
 
 **Initial Matches (Liked profiles highlighted):**
-<img src="assets/gay_male_matches.jpg" width="1100"/>
+<img src="attachment:assets/gay_male_matches.jpg" width="1100"/>
 
 **Additional Matches (Based off liked profiles):**
-<img src="assets/gay_male_more_matches.jpg" width="1100"/>
+<img src="attachment:assets/gay_male_more_matches.jpg" width="1100"/>
 
 #### **--> Analysis: Gay Male**
 
@@ -147,13 +147,13 @@ Since there were no ratings included in the dataset to perform some sort of supe
 #### **2. Bisexual Female**
 
 **User Input:**
-<img src="assets/bisexual_f_input.jpg" width="1100"/>
+<img src="attachment:assets/bisexual_f_input.jpg" width="1100"/>
 
 **Initial Matches (Liked profiles highlighted):**
-<img src="assets/bisexual_f_matches.jpg" width="1100"/>
+<img src="attachment:assets/bisexual_f_matches.jpg" width="1100"/>
 
 **Additional Matches (Based off liked profiles):**
-<img src="assets/bisexual_f_more_matches.jpg" width="1100"/>
+<img src="attachment:assets/bisexual_f_more_matches.jpg" width="1100"/>
 
 #### **--> Analysis: Bisexual Female**
 
