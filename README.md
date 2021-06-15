@@ -21,11 +21,11 @@
 - [Future Project Refinements](#Future-Project-Refinements)
 
 ### Background
-COVID has affected the entire world in many ways. One particular aspect that has been greatly affected is dating. Since the pandemic, users have turned to online dating to continue looking for romance. Match Group, who owns majority of the dating apps on the market (Tinder, Match.com, Hinge, OkCupid), has reported a [15% increase]('https://www.businessinsider.com/tinder-hinge-match-group-dating-apps-more-users-coronavirus-2020-8') in new subscribers in Q1 2020, right about the time stay-at-home orders went into place. Online dating became the new normal, as media outlets began suggesting virtual date ideas, such as virtual museum tours or ordering Uber Eats to share over FaceTime with a significant other. Dating apps were able to provide people with company, aiding in loneliness and isolation, as people were able to communicate and meet others. The apps also adapted to COVID guidelines, with Tinder having a pop up to remind users to remain socially distanced and to wash their hands.
+COVID has affected the entire world in many ways. One particular aspect that has been greatly affected is dating. Since the pandemic, users have turned to online dating to continue looking for romance. Match Group, who owns majority of the dating apps on the market (Tinder, Match.com, Hinge, OkCupid), has reported a [15% increase](https://www.businessinsider.com/tinder-hinge-match-group-dating-apps-more-users-coronavirus-2020-8) in new subscribers in Q1 2020, right about the time stay-at-home orders went into place. Online dating became the new normal, as media outlets began suggesting virtual date ideas, such as virtual museum tours or ordering Uber Eats to share over FaceTime with a significant other. Dating apps were able to provide people with company, aiding in loneliness and isolation, as people were able to communicate and meet others. The apps also adapted to COVID guidelines, with Tinder having a pop up to remind users to remain socially distanced and to wash their hands.
 
 ### Data Source(s)
 
-- [OkCupid Profiles (Kaggle)]('https://www.kaggle.com/andrewmvd/okcupid-profiles')
+- [OkCupid Profiles (Kaggle)](https://www.kaggle.com/andrewmvd/okcupid-profiles)
 
 ### Data Collection
 I retrieved the OkCupid Profiles dataset from Kaggle, containing approximately 60k rows of OkCupid profile users, with their personal information stripped. The dataset was 14.3+ MB large and contained fields from age, sex, orientation, and short response text data with open ended questions.
