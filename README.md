@@ -15,7 +15,7 @@
 - [Imported Libraries](#Imported-Libraries)
 - [Modeling Approach](#Modeling-Approach)
 - [Modeling Analyses](#Modeling-Analyses)
-    - [Streamlit App]('https://share.streamlit.io/vleong1/lover-recommendations/main/app.py')
+    - [Streamlit App](#Streamlit-App)
 - [Conclusions/Limitations](#Conclusions/Limitations)
 - [Recommendations](#Recommendations)
 - [Future Project Refinements](#Future-Project-Refinements)
@@ -49,7 +49,7 @@ I initially **dropped columns** I felt weren't indicative of a user's lifestyle,
 
 **How values were grouped / generalized:**
 
-<div><img src="assets/grouped_values.jpg" width="500"/></div>
+<img src="assets/grouped_values.jpg" width="500"/>
 
 ### Data Dictionary
 
@@ -72,11 +72,11 @@ I initially **dropped columns** I felt weren't indicative of a user's lifestyle,
 
 ### Data Visualization
 
-<div><img src="assets/age_sex_distribution.jpg" width="900"/></div>
+<img src="assets/age_sex_distribution.jpg" width="900"/>
 1. I first wanted to take a look at **age distribution by sex** and noticed that majority of the ages lied between the ages of 24 - 30, with predominately more male profiles across majority of the age groups. Interestingly, there are more female than male profiles for ages 55+.
 
 
-<div><img src="assets/diet_religion_count.jpg" width="900"/></div>
+<img src="assets/diet_religion_count.jpg" width="900"/>
 2. I also wanted to take a look at **diet by religion**, where there were significantly less data points for halal or kosher diets, relative to vegetarian diets. Additionally, there was a lack of profiles of Islam religion, which majority of those data points also lived within a halal diet. Lack of data points, especially for specific religions, would affect the recommendations, since there would be a smaller pool of potential mathces and "religion" would be one of the matching criteria I'd specify that would determine recommendations for a user.
 
 
@@ -125,13 +125,13 @@ Since there were no ratings included in the dataset to perform some sort of supe
 #### **1. Gay Male**
 
 **User Input:**
-<div><img src="assets/gay_male_input.jpg" width="1100"/></div>
+<img src="assets/gay_male_input.jpg" width="1100"/>
 
 **Initial Matches (Liked profiles highlighted):**
-<div><img src="assets/gay_male_matches.jpg" width="1100"/></div>
+<img src="assets/gay_male_matches.jpg" width="1100"/>
 
 **Additional Matches (Based off liked profiles):**
-<div><img src="assets/gay_male_more_matches.jpg" width="1100"/></div>
+<img src="assets/gay_male_more_matches.jpg" width="1100"/>
 
 #### **--> Analysis: Gay Male**
 
@@ -147,13 +147,13 @@ Since there were no ratings included in the dataset to perform some sort of supe
 #### **2. Bisexual Female**
 
 **User Input:**
-<div><img src="assets/bisexual_f_input.jpg" width="1100"/></div>
+<img src="assets/bisexual_f_input.jpg" width="1100"/>
 
 **Initial Matches (Liked profiles highlighted):**
-<div><img src="assets/bisexual_f_matches.jpg" width="1100"/></div>
+<img src="assets/bisexual_f_matches.jpg" width="1100"/>
 
 **Additional Matches (Based off liked profiles):**
-<div><img src="assets/bisexual_f_more_matches.jpg" width="1100"/></div>
+<img src="assets/bisexual_f_more_matches.jpg" width="1100"/>
 
 #### **--> Analysis: Bisexual Female**
 
@@ -167,7 +167,7 @@ Since there were no ratings included in the dataset to perform some sort of supe
 - Additionally, because liked profile `48349` indicated that they like dogs and cats, the addiitonal matches have a mix of users who like both pets, dislike both pets, or just like dogs -- this feature doesn't match the pet sentiment of the user, but instead *moreso the liked profiles*.
 
 ### Streamlit App
-Please feel free to test my [deployed Streamlit App]('https://share.streamlit.io/vleong1/lover-recommendations/main/app.py') for a hands-on lover recommendation experience!!
+Please feel free to test my [deployed Streamlit App](https://share.streamlit.io/vleong1/lover-recommendations/main/app.py) for a hands-on lover recommendation experience!!
 
 ### Conclusions/Limitations
 In conclusion, I noticed that the main limitation with *content-based filtering* is that **recommendations can become too similar**, due to the nature of the recommender model that has a limited ability to expand on predictions/recommendations, since the model is solely making predictions/recommendations based on the User's existing interests. The **dataset was also imbalanced**, lacking in the Islam religion or that of the Halal or Kosher diet. There was also significantly less users who had kids, versus those who didn't have kids. This would affect recommendations, especially if a user is of the Islam religion, with a Kosher diet, and wants kids. Additionally, the **more matching criteria** to filter the data on, the **smaller the pool** of users for recommendations. Lastly, I felt that some **values were ambiguous**, especially if left *null*. For example, I assumed that if "pets" was null, the user didn't like dogs or cats. However, it might be the case where they're unable to have a pet, not necessarily that they dislike pets.
